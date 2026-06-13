@@ -1,0 +1,45 @@
+name: Compilar APK de Cordova
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar el código del proyecto
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Configurar Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '11'
+
+    - name: Configurar el SDK de Android
+      uses: android-actions/setup-android@v3
+
+    - name: Instalar Cordova
+      run: npm install -g cordova
+
+    - name: Instalar dependencias del proyecto
+      run: npm install
+
+    - name: Agregar plataforma Android y Compilar APK
+      run: |
+        cordova platform add android --nosave || true
+        cordova build android --device
+
+    - name: Guardar el archivo APK listo
+      uses: actions/artifacts@v4
+      with:
+        name: app-debug-apk
+        path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
