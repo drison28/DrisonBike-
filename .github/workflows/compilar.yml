@@ -19,14 +19,14 @@ jobs:
         run: npm install -g @bubblewrap/cli
       - name: Init TWA
         run: |
-          echo "n" | bubblewrap init \
+          printf "n\n$JAVA_HOME\n" | bubblewrap init \
             --manifest https://drison28.github.io/DrisonBike-/manifest.json \
             --directory twa-app \
             --skipPwaValidation
       - name: Build APK
         run: |
           cd twa-app
-          echo "n" | bubblewrap build --skipSigning
+          printf "n\n$JAVA_HOME\n" | bubblewrap build --skipSigning
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
