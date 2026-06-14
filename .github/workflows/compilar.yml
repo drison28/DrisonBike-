@@ -17,28 +17,34 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Install Bubblewrap
-        run: npm install -g @bubblewrap/cli
-
-      - name: Init TWA project
+      - name: Clone TWA starter
         run: |
-          bubblewrap init \
-            --manifest=https://drison28.github.io/DrisonBike-/manifest.json \
-            --directory=twa-app \
-            --skipPwaValidation \
-            --installDeps
+          git clone https://github.com/GoogleChromeLabs/svgomg-twa.git twa-app
+
+      - name: Configure TWA
+        run: |
+          cd twa-app
+          cat > app/src/main/res/values/strings.xml << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+            <string name="app_name">Drison Bike</string>
+            <string name="hostName">drison28.github.io</string>
+            <string name="launchUrl">https://drison28.github.io/DrisonBike-/</string>
+            <string name="assetStatements">[]</string>
+          </resources>
+          EOF
 
       - name: Build APK
-        working-directory: twa-app
-        run: bubblewrap build --skipSigning
+        run: |
+          cd twa-app
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: drison-bike-twa
-          path: twa-app/app-release-unsigned.apk
+          path: twa-app/app/build/outputs/apk/debug/app-debug.apk
