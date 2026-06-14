@@ -27,9 +27,15 @@ jobs:
 
       - name: Init TWA project
         run: |
-          mkdir twa-app && cd twa-app
-          bubblewrap init --manifest=https://drison28.github.io/DrisonBike-/manifest.json --skipPwaValidation
-          echo "" | bubblewrap build
+          bubblewrap init \
+            --manifest=https://drison28.github.io/DrisonBike-/manifest.json \
+            --directory=twa-app \
+            --skipPwaValidation \
+            --installDeps
+
+      - name: Build APK
+        working-directory: twa-app
+        run: bubblewrap build --skipSigning
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
