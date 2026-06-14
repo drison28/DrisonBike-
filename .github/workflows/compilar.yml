@@ -12,11 +12,15 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: '11'
+          java-version: '17'
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
       - name: Clone TWA starter
         run: git clone https://github.com/GoogleChromeLabs/svgomg-twa.git twa-app
+      - name: Update Gradle wrapper
+        run: |
+          cd twa-app
+          ./gradlew wrapper --gradle-version=8.0
       - name: Configure TWA
         run: |
           cd twa-app
