@@ -18,20 +18,15 @@ jobs:
       - name: Install Bubblewrap
         run: npm install -g @bubblewrap/cli
       - name: Init TWA
-        env:
-          BUBBLEWRAP_SKIP_UPDATE: true
         run: |
-          bubblewrap init \
+          echo "n" | bubblewrap init \
             --manifest https://drison28.github.io/DrisonBike-/manifest.json \
             --directory twa-app \
-            --skipPwaValidation \
-            --installDeps \
-            --packageId com.drison.bike \
-            --name "Drison Bike"
+            --skipPwaValidation
       - name: Build APK
         run: |
           cd twa-app
-          bubblewrap build --skipSigning
+          echo "n" | bubblewrap build --skipSigning
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
