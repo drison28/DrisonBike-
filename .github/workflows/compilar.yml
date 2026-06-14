@@ -1,48 +1,32 @@
-9name: Build TWA APK
-
+name: Build TWA APK
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '11'
-
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
       - name: Clone TWA starter
-        run: |
-          git clone https://github.com/GoogleChromeLabs/svgomg-twa.git twa-app
-
+        run: git clone https://github.com/GoogleChromeLabs/svgomg-twa.git twa-app
       - name: Configure TWA
         run: |
           cd twa-app
-          cat > app/src/main/res/values/strings.xml << 'EOF'
-          <?xml version="1.0" encoding="utf-8"?>
-          <resources>
-            <string name="app_name">Drison Bike</string>
-            <string name="hostName">drison28.github.io</string>
-            <string name="launchUrl">https://drison28.github.io/DrisonBike-/</string>
-            <string name="assetStatements">[]</string>
-          </resources>
-          EOF
-
+          sed -i 's|svgomg.firebaseapp.com|drison28.github.io|g' app/src/main/res/values/strings.xml
+          sed -i 's|https://svgomg.firebaseapp.com|https://drison28.github.io/DrisonBike-/|g' app/src/main/res/values/strings.xml
       - name: Build APK
         run: |
           cd twa-app
           chmod +x gradlew
           ./gradlew assembleDebug
-
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
