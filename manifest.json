@@ -1,0 +1,22 @@
+{
+  "name": "Drison Bike AI 3D Pro",
+  "short_name": "Drison Bike",
+  "description": "Control digital Yamaha FZ16",
+  "start_url": "/DrisonBike-/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#020205",
+  "theme_color": "#00f3ff",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/drison28/DrisonBike-/main/icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/drison28/DrisonBike-/main/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
