@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.drison.drisonbike" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>DrisonBike Pro</name>
+    <description>Interfaz Digital e IA para Motocicleta.</description>
+    <author email="drison@ejemplo.com" href="https://github.com">Drison Duran</author>
+    <content src="index.html" />
+    <preference name="Orientation" value="landscape" />
+    <preference name="KeepRunning" value="true" />
+    <preference name="Fullscreen" value="true" />
+</widget>
